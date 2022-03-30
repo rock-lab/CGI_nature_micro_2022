@@ -8,7 +8,7 @@ def gen_lfc_table(comparison_list):
 
     for comp in comparison_list:
         print(comp)
-        m_path = '/data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
+        m_path = 'data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -25,7 +25,7 @@ def gen_lfc_table(comparison_list):
 
     return AllDrug_Table
 
-path = '/Results/Heatmap/'
+path = 'Results/Heatmap/'
 
 ############# SETTING WHAT TREATMENTS TO LOOK AT ####################
 Comparison_List =['1794_pool_BDQ_0625_5day_vs_308_DMSO_D5_0X',
@@ -67,7 +67,7 @@ def gen_fdr_table(comparison_list):
 
     for comp in comparison_list:
         print(comp)
-        m_path = '/data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
+        m_path = 'data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -132,6 +132,6 @@ or_table[fdr_hits_bool] = 0
 or_table = or_table.fillna(0)
 
 ############# SAVE OUTPUT USED FOR HEATMAP #############
-or_table.to_csv('/Results/Heatmap/htmp_data_gt1Tmt_D5.csv')
+or_table.to_csv('Results/Heatmap/htmp_data_gt1Tmt_D5.csv')
 
 

@@ -1,17 +1,14 @@
 import pandas as pd
-#import crispr_tools
 import numpy as np
 
 def gen_lfc_table(comparison_list):
-    sample_Res_file = pd.read_csv('result_296_RLC0012-1_day-Rif0.0625_vs_295_RLC0012-1_day-DMSO_lod20.resampling copy.txt', sep='\t')
-    all_gene_list = sample_Res_file.gene.values
+    sample_Res_file = pd.read_csv('data/list_of_H37Rv_orfs_in_library.txt', names=['Orf'], header=None)
+    all_gene_list = sample_Res_file.Orf.values
     AllDrug_Table = pd.DataFrame(data=all_gene_list, columns = ['id'])
 
     for comp in comparison_list:
         print(comp)
-        m_path = '/Users/zacharyazadian/RockLab Dropbox/Projects/chemical_genomics/data/MAGECK/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
-        #M = crispr_tools.data.results.open_file(m_path)
-        #M_df = M.data
+        m_path = '/data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -28,11 +25,9 @@ def gen_lfc_table(comparison_list):
 
     return AllDrug_Table
 
-path = '/Users/zacharyazadian/RockLab Dropbox/Zachary Azadian/ChemGen/New_Data_Results/AAA_Final_Data/Heatmap/'
+path = '/Results/Heatmap/'
 
 ############# SETTING WHAT TREATMENTS TO LOOK AT ####################
-# Comparison_DF = pd.read_csv(path+'D5_List.csv')
-# Comparison_List = Comparison_DF['0'].values
 Comparison_List =['1794_pool_BDQ_0625_5day_vs_308_DMSO_D5_0X',
 '1981_CLR_4X_D5_vs_1972_DMSO_D5',
 '662_Pool4_0_125X_INH_Day5_vs_308_DMSO_D5_0X',
@@ -62,21 +57,17 @@ Comparison_List =['1794_pool_BDQ_0625_5day_vs_308_DMSO_D5_0X',
 '367_Pool8_0_125X_Linez_Day5_vs_363_Pool6_0X_DMSO_Day5']
 
 ############# MAKE APPROPRIATELY LABELLED LFC TABLE ####################
-path = '/Users/zacharyazadian/RockLab Dropbox/Zachary Azadian/ChemGen/New_Data_Results/AAA_Final_Data/Heatmap/'
 lfc_table = gen_lfc_table(Comparison_List)
-#direction_lfc_table.to_csv(path+'LFC_table_D5.csv')
 
 def gen_fdr_table(comparison_list):
 
-    sample_Res_file = pd.read_csv('result_296_RLC0012-1_day-Rif0.0625_vs_295_RLC0012-1_day-DMSO_lod20.resampling copy.txt', sep='\t')
-    all_gene_list = sample_Res_file.gene.values
+    sample_Res_file = pd.read_csv('data/list_of_H37Rv_orfs_in_library.txt', names=['Orf'], header=None)
+    all_gene_list = sample_Res_file.Orf.values
     AllDrug_Table = pd.DataFrame(data=all_gene_list, columns = ['id'])
 
     for comp in comparison_list:
         print(comp)
-        m_path = '/Users/zacharyazadian/RockLab Dropbox/Projects/chemical_genomics/data/MAGECK/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
-        #M = crispr_tools.data.results.open_file(m_path)
-        #M_df = M.data
+        m_path = '/data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -96,10 +87,6 @@ def gen_fdr_table(comparison_list):
 
 ############# MAKING APPROPRIATELY LABELLED FDR TABLE ####################
 fdr_table = gen_fdr_table(Comparison_List)
-#fdr_table.to_csv(path+'FDR_table_D5.csv')
-
-############# LOAD IN CORRECT TABLES ####################
-#fdr_table = pd.read_csv('FDR_table_D5.csv', index_col=0)
 fdr_table = fdr_table.fillna(0)
 
 # making array of fdr values then boolean for which ones are hits
@@ -107,7 +94,6 @@ fdr_array = np.array(fdr_table.drop(columns='id').values)
 fdr_hits_array = fdr_array < 0.01
 
 ############# NOW LFC ####################
-#lfc_table = pd.read_csv('LFC_table_D5.csv', index_col=0)
 lfc_table = lfc_table.fillna(0)
 lfc_array = np.array(lfc_table.drop(columns='id').values)
 
@@ -127,23 +113,15 @@ bool_dep_freq_vector_gt1 = dep_freq_vector > 1
 enr_freq_vector = Enrichment_hits_array.sum(axis=1)
 bool_enr_freq_vector_gt1 = enr_freq_vector > 1
 
+# boolean vector to only include genes that are hits in 2 or more tmts
 either_freq_vector = dep_freq_vector + enr_freq_vector
 bool_either_freq_vector_gt1 = either_freq_vector > 1
-
-# print('This many genes were a hit (enr or depl) in more than one treatment',
-#       np.sum(bool_either_freq_vector_gt1))
-#
-# print('How many deplete in more than one tmt:',np.sum(bool_dep_freq_vector_gt1))
-# print('How many enrich in more than one tmt:',np.sum(bool_enr_freq_vector_gt1))
-# print('There could be a discrepancy for cases where a gene depletes in one tmt and enriches in one tmt. That gene would'
-#       'only begin to make the cut when enr and dep vectors are added together')
 
 # Need to give heatmap lfc table of only the 'or' genes, also replace Nan with zero
 lfc_table = lfc_table.set_index('id')
 or_table = lfc_table[bool_either_freq_vector_gt1]
 
-############# LOAD IN CORRECT FDR TABLE ####################
-#fdr_table = pd.read_csv('FDR_table_D5.csv', index_col=0)
+############# REMAKE FDR TABLE ####################
 fdr_table = gen_fdr_table(Comparison_List)
 fdr_table = fdr_table.set_index('id')
 
@@ -154,6 +132,6 @@ or_table[fdr_hits_bool] = 0
 or_table = or_table.fillna(0)
 
 ############# SAVE OUTPUT USED FOR HEATMAP #############
-#or_table.to_csv('htmp_data_gt1Tmt_D5.csv')
+or_table.to_csv('/Results/Heatmap/htmp_data_gt1Tmt_D5.csv')
 
 

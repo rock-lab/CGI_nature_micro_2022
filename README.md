@@ -41,11 +41,11 @@ Contains results and temporary files
 ### data
 
 
- - mageck:   Contains MAGeCK result files
- - counts:   Raw counts obtained from the sequencing pipeline described in Bosch &amp; DeJesus et al. 2021.
  - Final\_PreDepletion\_Grouped\_Split.csv: Table summarizing MAGeCK analysis results
  - list\_of\_H37Rv\_orfs\_in\_library.txt: List of genes in M. Tuberculosis strain H37Rv
  - Weiz\_wLFC.csv: Cleaned copy of Supplementary Data from Weizhen et al 2017.
+ - - **counts:**   Raw counts obtained from the sequencing pipeline described in Bosch &amp; DeJesus et al. 2021.
+ - - **mageck:**   Contains MAGeCK result files
 
 
 ## MAGECK Analysis
@@ -57,6 +57,12 @@ All MAGECK analysis were done using this command with the following flags:
 
 Gene-level result outputs are provided in the repository, as well as files with read-counts for each of the conditions.
 
+
+## Snippy Analysis
+
+Raw reads were downloaded from NCBI and run through snippy using the following command:
+
+    snippy --ref <NC_018143.2.gb> --prefix <sample ID> --outdir <path to output directory> --pe1 <path to read 1 FASTQ> --pe2 <path to read 2 FASTQ>
 
 
 ## Heatmap

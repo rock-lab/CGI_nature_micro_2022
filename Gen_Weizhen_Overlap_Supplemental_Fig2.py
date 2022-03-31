@@ -1,5 +1,4 @@
 import pandas as pd
-import crispr_tools
 import ast
 
 WData = pd.read_csv('data/Weiz_wLFC.csv')
@@ -183,26 +182,17 @@ def gen_Ci_table(gene_list, treatment_file, prefix):
     return AllDrug_Table
 
 
-## written to output intermediate tables (to check) and then load back in below ##
 emb_Ci = gen_Ci_table(emb_gene_list, emb_file, prefix='D1_')
-#emb_Ci.to_csv('Supplement/Emb_Ci.csv')
 emb_Ci_5 = gen_Ci_table(emb_gene_list, emb_file5, prefix='D5_')
-#emb_Ci_5.to_csv('Supplement/Emb_Ci_5.csv')
 
 inh_Ci = gen_Ci_table(inh_gene_list, inh_file, prefix = 'D1_')
-#inh_Ci.to_csv('Supplement/INH_Ci.csv')
 inh_Ci_5 = gen_Ci_table(inh_gene_list, inh_file5, prefix = 'D5_')
-#inh_Ci_5.to_csv('Supplement/INH_Ci_5.csv')
 
 rif_Ci = gen_Ci_table(rif_gene_list, rif_file, prefix = 'D1_')
-#rif_Ci.to_csv('Supplement/Rif_Ci.csv')
 rif_Ci_5 = gen_Ci_table(rif_gene_list, rif_file5, prefix = 'D5_')
-#rif_Ci_5.to_csv('Supplement/Rif_Ci_5.csv')
 
 vanc_Ci = gen_Ci_table(vanc_gene_list, vanc_file, prefix = 'D1_')
-vanc_Ci.to_csv('Supplement/Vanc_Ci.csv')
 vanc_Ci_5 = gen_Ci_table(vanc_gene_list, vanc_file5, prefix = 'D5_')
-vanc_Ci_5.to_csv('Supplement/Vanc_Ci_5.csv')
 
 
 
@@ -210,12 +200,9 @@ output_path = 'Results/Supplemental_Data_2/'
 #### Have all 3 tables - Weizhen+Hit_Status, Mag_1 + Mag_5
 
 ###### Emb
-#emb_weiz = pd.read_csv(output_path + 'Emb.csv', index_col=0)
 emb_weiz = Emb_Tab
 emb_weiz = emb_weiz.rename(columns={'Full_ID':'Gene_ID'})
-#emb_mag_1 = pd.read_csv(output_path + 'Emb_Ci.csv', index_col=0)
 emb_mag_1 = emb_Ci
-#emb_mag_5 = pd.read_csv(output_path + 'Emb_Ci_5.csv', index_col=0)
 emb_mag_5 = emb_Ci_5
 emb_1 = pd.merge(emb_weiz, emb_mag_1, on='Gene_ID')
 emb_15 = pd.merge(emb_1, emb_mag_5, on='Gene_ID')
@@ -224,12 +211,9 @@ emb_final.columns = ['ORF_ID', 'TnSeq_l2fc', 'TnSeq_p_adj', 'CRISPRi_Hit', 'CRIS
 emb_final = emb_final.set_index('ORF_ID')
 
 ####### inh
-#inh_weiz = pd.read_csv(output_path + 'INH.csv', index_col=0)
-inh_weiz = Inh_Tab
+inh_weiz = INH_Tab
 inh_weiz = inh_weiz.rename(columns={'Full_ID':'Gene_ID'})
-#inh_mag_1 = pd.read_csv(output_path + 'INH_Ci.csv', index_col=0)
 inh_mag_1 = inh_Ci
-#inh_mag_5 = pd.read_csv(output_path + 'INH_Ci_5.csv', index_col=0)
 inh_mag_5 = inh_Ci_5
 inh_1 = pd.merge(inh_weiz, inh_mag_1, on='Gene_ID')
 inh_15 = pd.merge(inh_1, inh_mag_5, on='Gene_ID')
@@ -238,12 +222,9 @@ inh_final.columns = ['ORF_ID', 'TnSeq_l2fc', 'TnSeq_p_adj', 'CRISPRi_Hit', 'CRIS
 inh_final = inh_final.set_index('ORF_ID')
 
 ####### rif
-#rif_weiz = pd.read_csv(output_path + 'Rif.csv', index_col=0)
 rif_weiz = Rif_Tab
 rif_weiz = rif_weiz.rename(columns={'Full_ID':'Gene_ID'})
-#rif_mag_1 = pd.read_csv(output_path + 'Rif_Ci.csv', index_col=0)
 rif_mag_1 = rif_Ci
-#rif_mag_5 = pd.read_csv(output_path + 'Rif_Ci_5.csv', index_col=0)
 rif_mag_5 = rif_Ci_5
 rif_1 = pd.merge(rif_weiz, rif_mag_1, on='Gene_ID')
 rif_15 = pd.merge(rif_1, rif_mag_5, on='Gene_ID')
@@ -252,12 +233,9 @@ rif_final.columns = ['ORF_ID', 'TnSeq_l2fc', 'TnSeq_p_adj', 'CRISPRi_Hit', 'CRIS
 rif_final = rif_final.set_index('ORF_ID')
 
 ####### vanc
-#vanc_weiz = pd.read_csv(output_path + 'Vanc.csv', index_col=0)
 vanc_weiz = Vanc_Tab
 vanc_weiz = vanc_weiz.rename(columns={'Full_ID':'Gene_ID'})
-#vanc_mag_1 = pd.read_csv(output_path + 'Vanc_Ci.csv', index_col=0)
 vanc_mag_1 = vanc_Ci
-#vanc_mag_5 = pd.read_csv(output_path + 'Vanc_Ci_5.csv', index_col=0)
 vanc_mag_5 = vanc_Ci_5
 vanc_1 = pd.merge(vanc_weiz, vanc_mag_1, on='Gene_ID')
 vanc_15 = pd.merge(vanc_1, vanc_mag_5, on='Gene_ID')
@@ -265,6 +243,7 @@ vanc_final = vanc_15[['Gene_ID', 'Vanc_l2fc', 'Vanc_q', 'CRISPRi_Hit', 'D1_CRISP
 vanc_final.columns = ['ORF_ID', 'TnSeq_l2fc', 'TnSeq_p_adj', 'CRISPRi_Hit', 'CRISPRi_D1_l2fc', 'CRISPRi_D1_p_adj', 'CRISPRi_D5_l2fc', 'CRISPRi_D5_p_adj']
 vanc_final = vanc_final.set_index('ORF_ID')
 
+from openpyxl.workbook import Workbook
 writer = pd.ExcelWriter(output_path+'Supplemental_Data_2.xlsx')
 emb_final.to_excel(writer, sheet_name='EMB')
 inh_final.to_excel(writer, sheet_name='INH')
@@ -273,8 +252,7 @@ vanc_final.to_excel(writer, sheet_name='VAN')
 writer.save()
 writer.close()
 
-# add legend tab
-# only left would be switch to arial and column width **** AND THE TRUE/FALSE to Yes/No
+# only difference is add legend tab and the TRUE/FALSE to Yes/No
 
 
 

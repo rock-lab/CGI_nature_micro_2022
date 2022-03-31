@@ -1,6 +1,5 @@
 # CGI\_nature\_micro\_2022
-Code used in the Shuqi &amp; Poulton et al. Nature Micro 2022 paper
-
+Code and commands used in the Shuqi &amp; Poulton et al. Nature Micro 2022 paper
 
 
 ## Requirements
@@ -8,10 +7,10 @@ Code used in the Shuqi &amp; Poulton et al. Nature Micro 2022 paper
 
 ### Python code:
 
- - MAGeCK:  (Version 0.5.7) https://sourceforge.net/p/mageck/wiki/install/
+ - MAGeCK:  (Version 0.5.7): https://sourceforge.net/p/mageck/wiki/install/
  - pandas (Version 1.4.1)
  - ast (Version 3.10.4)
-
+ - snippy (Version 3.2-dev): https://github.com/tseemann/snippy
 
 ### R code:
 

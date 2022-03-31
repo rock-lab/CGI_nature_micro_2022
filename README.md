@@ -43,9 +43,9 @@ Contains results and temporary files
 
  - mageck:   Contains MAGeCK result files
  - counts:   Raw counts obtained from the sequencing pipeline described in Bosch &amp; DeJesus et al. 2021.
- - Final_PreDepletion_Grouped_Split.csv: Table summarizing MAGeCK analysis results
- - list_of_H37Rv_orfs_in_library.txt: List of genes in M. Tuberculosis strain H37Rv
- - Weiz_wLFC.csv: Cleaned copy of Supplementary Data from Weizhen et al 2017.
+ - Final\_PreDepletion\_Grouped\_Split.csv: Table summarizing MAGeCK analysis results
+ - list\_of\_H37Rv\_orfs\_in\_library.txt: List of genes in M. Tuberculosis strain H37Rv
+ - Weiz\_wLFC.csv: Cleaned copy of Supplementary Data from Weizhen et al 2017.
 
 
 ## MAGECK Analysis
@@ -61,18 +61,20 @@ Gene-level result outputs are provided in the repository, as well as files with 
 
 ## Heatmap
 
-Read through the MAGeCK result files to generate a table (~/Results/Heatmap/htmp_data_gt1Tmt_D5.csv) of log-fold change values as described in the paper.
+Read through the MAGeCK result files to generate a table (./Results/Heatmap/htmp\_data\_gt1Tmt\_D5.csv) of log-fold change values as described in the paper.
 
-    ~/python Data_Prep_Heatmap_Script.py
+    python Data_Prep_Heatmap_Script.py
 
-Take the log-fold change data table and create the Heatmap (~/Results/Heatmap/htmp_Ward_D_gt1Tmt_D5.png) from Supplementary material.
+Take the log-fold change data table and create the Heatmap (./Results/Heatmap/htmp\_Ward\_D\_gt1Tmt\_D5.png) from Supplementary material.
    
-    ~/Rscript Heatmap_Script_D5.R
+    Rscript Heatmap_Script_D5.R
 
 
 
 ## TnSeq Comparison
 
-Read cleaned supplementary data from Weizhen et al 2017 (~/data/Weiz_wLFC.csv) and the table summarizing MAGeCK results (~/data/Final_PreDepletion_Grouped_Split.csv) to generate Supplementary Data 2 (~/Results/Supplemental_Data_2/Supplemental_Data_2.xlsx).
+Read cleaned supplementary data from Weizhen et al 2017 (./data/Weiz\_wLFC.csv) and the table summarizing MAGeCK results (./data/Final\_PreDepletion\_Grouped\_Split.csv) to generate Supplementary Data 2 (./Results/Supplemental\_Data\_2/Supplemental\_Data\_2.xlsx).
 
-    ~/python Gen_Weizhen_Overlap_Supplemental_Fig2.py
+    python Gen_Weizhen_Overlap_Supplemental_Fig2.py
+
+

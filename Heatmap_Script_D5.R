@@ -47,7 +47,7 @@ ordered.cluster.col = rotate(cluster.col, desired_order_5)
 
 ############# MAKE SURE LABELLED CORRECTLY ################
 path = 'Results/Heatmap/'
-output = "htmp_Ward_D_gt1Tmt_D1_D5.png"
+output = "htmp_Ward_D_gt1Tmt_D5.png"
 
 png(paste(path, output, sep=''), width=9, height=10, units="in", res=2000)
 

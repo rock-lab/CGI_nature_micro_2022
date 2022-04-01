@@ -21,6 +21,8 @@ Code and commands used in the Shuqi &amp; Poulton et al. Nature Micro 2022 paper
  - gplots (Version 3.1.1)
  - dendextend (Version 1.14.0)
  - RColorBrewer (Version 1.1-2)
+ - stringr (Version 1.4.0)
+ - parallel (Version 2.14.0)
 
 <br>
 <br>
@@ -44,6 +46,7 @@ Contains results and temporary files
  - Final\_PreDepletion\_Grouped\_Split.csv: Table summarizing MAGeCK analysis results
  - list\_of\_H37Rv\_orfs\_in\_library.txt: List of genes in M. Tuberculosis strain H37Rv
  - Weiz\_wLFC.csv: Cleaned copy of Supplementary Data from Weizhen et al 2017.
+ - Volcano_Plot_Axes_Table.csv: Table read in volcano plot generating script to specify desired data, axes, and title.   
  - **counts:**
  - - Raw counts obtained from the sequencing pipeline described in Bosch &amp; DeJesus et al. 2021.
  - **mageck:**
@@ -94,5 +97,13 @@ Read cleaned supplementary data from Weizhen et al 2017 (./data/Weiz\_wLFC.csv) 
 
     python Gen_Weizhen_Overlap_Supplemental_Fig2.py
 
+
+  <br>
+  <br>
   
-  
+## Volcano Plots
+
+Read through the MAGeCK result files to generate volcano plots in Figure 1 (./Results/Volcano_Plots).  
+
+    Rscript Volcano_Plot_Condition_Level.R
+

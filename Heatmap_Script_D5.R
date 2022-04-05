@@ -6,6 +6,7 @@ require(dendextend)
 library(RColorBrewer)
 
 DF = read.csv('Results/Heatmap/htmp_data_gt1Tmt_D5.csv')
+
 colnames(DF)
 new_colnames <- c( "id", "BDQ_5_0625","Cla_5_4",
                    "INH_5_125","Rif_5_125", "BDQ_5_125",
@@ -46,8 +47,10 @@ ordered.cluster.col = rotate(cluster.col, desired_order_5)
 
 
 ############# MAKE SURE LABELLED CORRECTLY ################
+
 path = 'Results/Heatmap/'
 output = "htmp_Ward_D_gt1Tmt_D5.png"
+
 
 png(paste(path, output, sep=''), width=9, height=10, units="in", res=2000)
 

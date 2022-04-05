@@ -1,14 +1,18 @@
 import pandas as pd
+
 import numpy as np
 
 def gen_lfc_table(comparison_list):
     sample_Res_file = pd.read_csv('data/list_of_H37Rv_orfs_in_library.txt', names=['Orf'], header=None)
     all_gene_list = sample_Res_file.Orf.values
+
     AllDrug_Table = pd.DataFrame(data=all_gene_list, columns = ['id'])
 
     for comp in comparison_list:
         print(comp)
+
         m_path = 'data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
+
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -24,6 +28,7 @@ def gen_lfc_table(comparison_list):
         AllDrug_Table = AllDrug_Table.merge(curTable, on='id', how='left')
 
     return AllDrug_Table
+
 
 path = 'Results/Heatmap/'
 
@@ -57,17 +62,21 @@ Comparison_List =['1794_pool_BDQ_0625_5day_vs_308_DMSO_D5_0X',
 '367_Pool8_0_125X_Linez_Day5_vs_363_Pool6_0X_DMSO_Day5']
 
 ############# MAKE APPROPRIATELY LABELLED LFC TABLE ####################
+
 lfc_table = gen_lfc_table(Comparison_List)
 
 def gen_fdr_table(comparison_list):
 
     sample_Res_file = pd.read_csv('data/list_of_H37Rv_orfs_in_library.txt', names=['Orf'], header=None)
     all_gene_list = sample_Res_file.Orf.values
+
     AllDrug_Table = pd.DataFrame(data=all_gene_list, columns = ['id'])
 
     for comp in comparison_list:
         print(comp)
+
         m_path = 'data/mageck/result_'+comp+'_alphamedian_control_control_lod100.mageck.gene_summary.txt'
+
         M_df = pd.read_csv(m_path, sep='\t')
 
         curTable = pd.DataFrame(index = M_df['id'])
@@ -87,6 +96,7 @@ def gen_fdr_table(comparison_list):
 
 ############# MAKING APPROPRIATELY LABELLED FDR TABLE ####################
 fdr_table = gen_fdr_table(Comparison_List)
+
 fdr_table = fdr_table.fillna(0)
 
 # making array of fdr values then boolean for which ones are hits
@@ -94,6 +104,7 @@ fdr_array = np.array(fdr_table.drop(columns='id').values)
 fdr_hits_array = fdr_array < 0.01
 
 ############# NOW LFC ####################
+
 lfc_table = lfc_table.fillna(0)
 lfc_array = np.array(lfc_table.drop(columns='id').values)
 
@@ -121,7 +132,9 @@ bool_either_freq_vector_gt1 = either_freq_vector > 1
 lfc_table = lfc_table.set_index('id')
 or_table = lfc_table[bool_either_freq_vector_gt1]
 
+
 ############# REMAKE FDR TABLE ####################
+
 fdr_table = gen_fdr_table(Comparison_List)
 fdr_table = fdr_table.set_index('id')
 
@@ -132,6 +145,8 @@ or_table[fdr_hits_bool] = 0
 or_table = or_table.fillna(0)
 
 ############# SAVE OUTPUT USED FOR HEATMAP #############
+
 or_table.to_csv('Results/Heatmap/htmp_data_gt1Tmt_D5.csv')
+
 
 

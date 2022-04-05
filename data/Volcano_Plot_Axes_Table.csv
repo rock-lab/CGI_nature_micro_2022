@@ -1,0 +1,4 @@
+File,Xmax,Xtick,Drug,Day,Conc
+298_RLC0012-1_day-Rif0.25_vs_295_RLC0012-1_day-DMSO,5,2.5,RIF,1,High
+483_Pool1_INH_D5_0_5X_vs_308_DMSO_D5_0X,9,3,INH,5,High
+321_BDQ_D5_0_25X_vs_308_DMSO_D5_0X,5,2.5,BDQ,5,High
